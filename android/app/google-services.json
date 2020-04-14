@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "897029734902",
+    "firebase_url": "https://gum-task.firebaseio.com",
+    "project_id": "gum-task",
+    "storage_bucket": "gum-task.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:897029734902:android:b1863cb4797387b69187d7",
+        "android_client_info": {
+          "package_name": "com.tezz.gumtask"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "897029734902-ku5th7k6vc7n8c03skhqo664sbc8lt6e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tezz.gumtask",
+            "certificate_hash": "66a199a2654c4782d4c79354e138c45ba3c6c251"
+          }
+        },
+        {
+          "client_id": "897029734902-v2n0plffos4mpi8pvcpiefhsg0faijj7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA56SQv--vP_L1hnINad-SkVub1IJfbLz8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "897029734902-v2n0plffos4mpi8pvcpiefhsg0faijj7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

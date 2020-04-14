@@ -1,4 +1,4 @@
-package com.gumtask;
+package com.tezz.gumtask;
 
 import com.facebook.react.ReactActivity;
 

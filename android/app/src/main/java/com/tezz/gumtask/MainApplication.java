@@ -1,4 +1,4 @@
-package com.gumtask;
+package com.tezz.gumtask;
 
 import android.app.Application;
 import android.content.Context;

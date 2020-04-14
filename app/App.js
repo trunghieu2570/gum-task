@@ -14,13 +14,14 @@ import {
 import Home from './modules/home/scenes/Home';
 import { Provider } from 'react-redux';
 import store from './redux/store';
+import TaskList from './modules/tasklist/scenes/TaskList';
 
 
 class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <Home/>
+        <TaskList/>
       </Provider>
     );
   }

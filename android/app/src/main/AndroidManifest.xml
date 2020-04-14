@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="com.gumtask">
+  package="com.tezz.gumtask">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
