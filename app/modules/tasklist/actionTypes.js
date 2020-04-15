@@ -1,1 +1,2 @@
 export const GET_TASKS = 'GET_TASK';
+export const TOGGLE_COMPLETE_TRUE = 'TOGGLE_COMPLETE_TRUE';

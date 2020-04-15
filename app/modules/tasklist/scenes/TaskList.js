@@ -6,19 +6,22 @@ import {
     FlatList,
     View,
     Text,
-    ActivityIndicator
+    ActivityIndicator,
+    CheckBox,
+    TouchableOpacity,
 } from 'react-native';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { getTask } from '../firestore'; //Import your actions
+import { getTask, updateTask } from '../firestore'; //Import your actions
 
 class TaskList extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
+            check: false,
         };
 
         this.renderItem = this.renderItem.bind(this);
@@ -48,16 +51,32 @@ class TaskList extends Component {
         }
     }
 
+    renderTitle(text, complete) {
+        if (complete)
+            return (
+                <Text style={styles.titleComplete}>
+                    {text}
+                </Text>
+            );
+        else
+            return (
+                <Text style={styles.titleIncomplete}>
+                    {text}
+                </Text>
+            );
+    }
+
     renderItem({ item, index }) {
         return (
-            <View style={styles.row}>
-                <Text style={styles.title}>
-                    {(parseInt(index) + 1)}{". "}{item.title}
-                </Text>
-                <Text style={styles.description}>
-                    {item.description}
-                </Text>
-            </View>
+            <TouchableOpacity activeOpacity={1} onPress={() => this.props.updateTask(item.id, !item.complete)}>
+                <View style={styles.row}>
+                    <CheckBox value={item.complete}
+                        onValueChange={() => this.props.updateTask(item.id, !item.complete)}
+                    />
+                    {this.renderTitle(item.title, item.complete)}
+                </View>
+            </TouchableOpacity>
+
         )
     }
 };
@@ -68,7 +87,6 @@ class TaskList extends Component {
 // and insert/links it into the props of our component.
 // This function makes Redux know that this component needs to be passed a piece of the state
 function mapStateToProps(state, props) {
-    console.log(state.taskReducer);
     return {
         loading: state.taskReducer.loading,
         tasks: state.taskReducer.tasks
@@ -78,7 +96,10 @@ function mapStateToProps(state, props) {
 // Doing this merges our actions into the component’s props,
 // while wrapping them in dispatch() so that they immediately dispatch an Action.
 // Just by doing this, we will have access to the actions defined in out actions file (action/home.js)
-const mapDispatchToProps = (dispatch) => bindActionCreators({ getTask }, dispatch);
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+    getTask,
+    updateTask,
+}, dispatch);
 
 //Connect everything
 export default connect(mapStateToProps, mapDispatchToProps)(TaskList);
@@ -92,14 +113,24 @@ const styles = StyleSheet.create({
     },
 
     row: {
+        flex: 1,
+        flexDirection: "row",
         borderBottomWidth: 1,
         borderColor: "#ccc",
         padding: 10
     },
 
-    title: {
+    titleIncomplete: {
+        marginTop: 5,
         fontSize: 15,
         fontWeight: "600"
+    },
+
+    titleComplete: {
+        marginTop: 5,
+        fontSize: 15,
+        fontWeight: "600",
+        textDecorationLine: "line-through",
     },
 
     description: {

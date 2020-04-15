@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   footer: {
-    color: '#111',
+    color: '#110',
     fontSize: 12,
     fontWeight: '600',
     padding: 4,
