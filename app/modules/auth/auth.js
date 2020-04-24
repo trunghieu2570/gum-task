@@ -1,26 +1,31 @@
 import auth from '@react-native-firebase/auth';
-import { actionRegisterSuccess } from './actions';
+import { actionRegisterSuccess, actionRegisterFailed, actionRegisterPending, actionLoginSuccess } from './actions';
 
 export function register(email, password) {
     return (dispatch) => {
-        console.log("pass r");
+        dispatch(actionRegisterPending());
         auth()
             .createUserWithEmailAndPassword(email, password)
             .then((user) => {
                 dispatch(actionRegisterSuccess(user))
                 console.log('User account created & signed in!');
+                dispatch(actionLoginSuccess(user));
             })
             .catch(error => {
-                if (error.code === 'auth/email-already-in-use') {
-                    console.log('That email address is already in use!');
+                switch (error.code) {
+                    case 'auth/email-already-in-use':
+                        dispatch(actionRegisterFailed('That email address is already in use!'));
+                        break;
+                    case 'auth/invalid-email':
+                        dispatch(actionRegisterFailed('That email address is invalid!'));
+                        break;
+                    default:
+                        dispatch(actionRegisterFailed(error.code));
+                        break;
                 }
 
-                if (error.code === 'auth/invalid-email') {
-                    console.log('That email address is invalid!');
-                }
-
-                console.error(error);
             });
     }
+
 }
 

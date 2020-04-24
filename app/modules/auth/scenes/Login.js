@@ -21,7 +21,6 @@ class Login extends Component {
                     underlayColor="#eee"
                     style={styles.buttonContainer}
                     onPress={() => {
-                        console.log("pass");
                         return navigation.navigate('Register');
                     }}
                 >

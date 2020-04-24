@@ -7,7 +7,7 @@ class InputContainer extends Component {
         const { placeholder, onChangeText } = this.props;
         return (
             <View style={styles.inputContainer}>
-                <TextInput placeholder={placeholder} onChangeText={onChangeText} />
+                <TextInput autoCorrect={false} placeholder={placeholder} onChangeText={onChangeText} />
             </View>
         );
     }

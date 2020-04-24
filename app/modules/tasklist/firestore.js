@@ -1,6 +1,5 @@
 import firestore from '@react-native-firebase/firestore';
 import { actionGetTask } from './actions';
-import { useEffect } from 'react';
 
 
 export function getTask() {
