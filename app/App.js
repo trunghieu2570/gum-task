@@ -19,7 +19,7 @@ import Login from './modules/auth/scenes/Login';
 import Register from './modules/auth/scenes/Register';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { navigationRef } from './Navigation';
+import { navigationRef } from './Navigator';
 
 
 const Stack = createStackNavigator();
@@ -39,44 +39,4 @@ class App extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: '#eee',
-  },
-  engine: {
-    position: 'absolute',
-    right: 0,
-  },
-  body: {
-    backgroundColor: '#f0f',
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: '#000',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: '#111',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: '#110',
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
-  },
-});
-
 export default App;
