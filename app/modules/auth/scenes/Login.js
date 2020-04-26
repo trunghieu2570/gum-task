@@ -6,7 +6,7 @@ import InputContainer from '../components/InputContainer';
 import SubmitButton from '../components/SubmitButton';
 import { validateLogin } from '../utils/validateLogin';
 import { actionResetErrorMessage } from '../actions';
-import { login } from '../auth';
+import { login, checkAuthState } from '../auth';
 
 const defaultState = {
     email: null,
@@ -46,11 +46,16 @@ class Login extends Component {
         });
     }
 
+    componentDidMount() {
+        
+    }
+
 
     render() {
         const { navigation } = this.props;
         const { error, resetMessage, pending } = this.props;
-
+        const { checkAuthState } = this.props;
+        checkAuthState();
         if (error != undefined) {
             this.showError(error);
             resetMessage();
@@ -73,7 +78,7 @@ class Login extends Component {
                         style={styles.button}
                         onPress={this.doLogin}
                     >
-                        <Text style={{color: '#fff'}}>Login</Text>
+                        <Text style={{ color: '#fff' }}>Login</Text>
                     </SubmitButton>
                     <TouchableHighlight
                         underlayColor="#eee"
@@ -137,6 +142,7 @@ function mapStateToProps(state) {
 const mapDispatchToProps = (dispatch) => bindActionCreators({
     login,
     resetMessage: actionResetErrorMessage,
+    checkAuthState,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

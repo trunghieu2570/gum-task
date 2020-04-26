@@ -4,7 +4,7 @@ import { Keyboard, Text, ActivityIndicator, View, StyleSheet, TouchableOpacity }
 import InputContainer from '../components/InputContainer';
 import { bindActionCreators } from 'redux';
 import { register } from '../auth';
-import { actionResetErrorMessage, actionValidateInput } from '../actions';
+import { actionResetErrorMessage } from '../actions';
 import Snackbar from 'react-native-snackbar';
 import { validateRegister } from '../utils/validateRegister';
 import SubmitButton from '../components/SubmitButton';
@@ -144,6 +144,7 @@ function mapStateToProps(state) {
 const mapDispatchToProps = (dispatch) => bindActionCreators({
     register,
     resetMessage: actionResetErrorMessage,
+
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Register);

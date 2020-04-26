@@ -28,7 +28,7 @@ export function actionAuthPending() {
 
 //login actions
 export function actionLoginSuccess(user) {
-    console.log(`login ${user.user.email}`);
+    console.log(`login ${user.email}`);
     try {
         Navigator.replace('TaskList');
     } catch (err) {

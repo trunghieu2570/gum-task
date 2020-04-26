@@ -9,7 +9,7 @@ export function register(email, password) {
             .then((user) => {
                 dispatch(actionRegisterSuccess(user))
                 console.log('User account created & signed in!');
-                dispatch(actionLoginSuccess(user));
+                dispatch(actionLoginSuccess(user.user));
             })
             .catch(error => {
                 switch (error.code) {
@@ -29,6 +29,17 @@ export function register(email, password) {
 
 }
 
+export function checkAuthState() {
+    return dispatch => {
+        dispatch(actionAuthPending());
+        var user = auth().currentUser;
+        if (user) {
+            console.log('signed in!');
+            dispatch(actionLoginSuccess(user));
+        }
+    }
+}
+
 export function login(email, password) {
     return dispatch => {
         dispatch(actionAuthPending());
@@ -36,7 +47,7 @@ export function login(email, password) {
             .signInWithEmailAndPassword(email, password)
             .then(user => {
                 console.log('signed in!');
-                dispatch(actionLoginSuccess(user));
+                dispatch(actionLoginSuccess(user.user));
             })
             .catch(error => {
                 dispatch(actionAuthFailed(error.code));
