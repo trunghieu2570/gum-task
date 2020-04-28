@@ -20,6 +20,7 @@ import Register from './modules/auth/scenes/Register';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { navigationRef } from './Navigator';
+import TitleBar from './modules/tasklist/components/TitleBar';
 
 
 const Stack = createStackNavigator();
@@ -30,9 +31,12 @@ class App extends Component {
       <Provider store={store}>
         <NavigationContainer ref={navigationRef}>
           <Stack.Navigator>
+            <Stack.Screen name="TaskList" component={TaskList} 
+            options={{headerTitle: (props)=><TitleBar {...props} />}}
+            />
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="Register" component={Register} />
-            <Stack.Screen name="TaskList" component={TaskList} />
+
           </Stack.Navigator>
         </NavigationContainer>
       </Provider>

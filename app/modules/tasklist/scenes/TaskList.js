@@ -13,8 +13,8 @@ import {
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-
-import { getTask, updateTask } from '../firestore'; //Import your actions
+import { actionTouchTitle } from '../actions';
+import { getTask, updateTask, getTaskSheet, getTasksFromSheet } from '../firestore'; //Import your actions
 
 class TaskList extends Component {
     constructor(props) {
@@ -24,14 +24,35 @@ class TaskList extends Component {
             check: false,
         };
 
-        this.renderItem = this.renderItem.bind(this);
+        this.renderItem = this.renderTaskItem.bind(this);
+        this.renderSheetItem = this.renderSheetItem.bind(this);
+        this.renderTaskItem = this.renderTaskItem.bind(this);
+        this.onSheetPress = this.onSheetPress.bind(this);
+        this.renderTitle = this.renderTitle.bind(this);
     }
 
     componentDidMount() {
-        this.props.getTask(); //call our action
+        //this.props.getTask(); //call our action
+        this.props.getTaskSheet();
+    }
+
+    onSheetPress(sheetId) {
+        this.props.toggleShowSheets();
+        this.props.getTasksFromSheet(sheetId);
     }
 
     render() {
+        if (this.props.showTaskSheet) {
+            return (
+                <View style={{ flex: 1, backgroundColor: '#fff', paddingTop: 20 }}>
+                    <FlatList
+                        ref='listRef2'
+                        data={this.props.sheets}
+                        renderItem={this.renderSheetItem}
+                        keyExtractor={(item, index) => index} />
+                </View>
+            );
+        }
         if (this.props.loading) {
             return (
                 <View style={styles.activityIndicatorContainer}>
@@ -44,7 +65,7 @@ class TaskList extends Component {
                     <FlatList
                         ref='listRef'
                         data={this.props.tasks}
-                        renderItem={this.renderItem}
+                        renderItem={this.renderTaskItem}
                         keyExtractor={(item, index) => index} />
                 </View>
             );
@@ -66,14 +87,30 @@ class TaskList extends Component {
             );
     }
 
-    renderItem({ item, index }) {
+    renderTaskItem({ item, index }) {
         return (
             <TouchableOpacity activeOpacity={1} onPress={() => this.props.updateTask(item.id, !item.complete)}>
                 <View style={styles.row}>
                     <CheckBox value={item.complete}
-                        onValueChange={() => this.props.updateTask(item.id, !item.complete)}
+                        onValueChange={() => this.props.updateTask(item.sheetId, item.id, !item.complete)}
                     />
-                    {this.renderTitle(item.title, item.complete)}
+                    {this.renderTitle(item.title ?? item.summary, item.complete)}
+                </View>
+            </TouchableOpacity>
+
+        )
+    }
+
+    renderSheetItem({ item, index }) {
+        return (
+            <TouchableOpacity
+                activeOpacity={1}
+                onPress={() => this.onSheetPress(item.id)}
+            >
+                <View style={styles.row}>
+                    <Text style={styles.titleIncomplete}>
+                        {item.name}
+                    </Text>
                 </View>
             </TouchableOpacity>
 
@@ -89,7 +126,9 @@ class TaskList extends Component {
 function mapStateToProps(state, props) {
     return {
         loading: state.taskReducer.loading,
-        tasks: state.taskReducer.tasks
+        tasks: state.taskReducer.tasks,
+        sheets: state.taskReducer.sheets,
+        showTaskSheet: state.taskReducer.showTaskSheet
     }
 }
 
@@ -99,6 +138,9 @@ function mapStateToProps(state, props) {
 const mapDispatchToProps = (dispatch) => bindActionCreators({
     getTask,
     updateTask,
+    getTaskSheet,
+    getTasksFromSheet,
+    toggleShowSheets: actionTouchTitle,
 }, dispatch);
 
 //Connect everything

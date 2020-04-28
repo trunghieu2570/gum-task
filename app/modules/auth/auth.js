@@ -31,7 +31,7 @@ export function register(email, password) {
 
 export function checkAuthState() {
     return dispatch => {
-        dispatch(actionAuthPending());
+        //dispatch(actionAuthPending());
         var user = auth().currentUser;
         if (user) {
             console.log('signed in!');
